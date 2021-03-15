@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/style.css" />
+    <title>Weather</title>
+</head>
+<body>
+    <header class="title">
+        <h1 class="titletext">Weather Dashboard</h1>
+    </header>
+    
+    <main class="flex-row justify-space-between">
+      <div class="col-12 col-md-4">
+          <div class="card">
+              <h2 class="card-header">Search for a city</h2>
+                  <form id="formlist" class="card-body">
+                  <label class="form-label" for="city"></label>
+                  <input name="city" id="city" type="text" autofocus="true" class="form-input" />
+                  <button type="submit" class="btn" id="submitbtn">Search</button>
+                  </form>
+          </div>
+    
+          <div class="card">
+              <h2 class="card-header">Search History</h2>
+                  <div class="card-body" id="historyBtn"> 
+                  </div>
+          </div>
+      </div>
+        
+      <div class="col-12 col-md-8">
+          <div id="weatherNow">
+              <ul>
+                <li id="cityname" ></li>
+                <li id="temperature"></li>
+                <li id="humidity"></li>
+                <li id="wind"></li>
+                <li id="uv"></li>
+              </ul>
+          </div>
+
+          <div id="Forecast">
+            <h3></h3>
+            <div id="day">1</div>
+            <div id="day">1</div>
+            <div id="day">1</div>
+            <div id="day">1</div>
+            <div id="day">1</div>
+          </div>
+      </div>
+      </main>
+    
+      <script src="./assets/script.js"></script>
+</body>
+</html>
