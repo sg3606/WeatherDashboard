@@ -1,8 +1,9 @@
-/* get layout idea from lecture activity */
+/* developed layout from lecture activity */
 :root {
     --primary: white;
     --secondary: floralwhite;
     --dark:teal;
+    --light-background: skyblue;
     --border-radius: 0.2rem;
 }
   
@@ -112,8 +113,13 @@ h2 {
 }
 
 
-ul {
+#current {
     list-style-type: none;
+}
+
+#forecastday {
+    list-style-type: none;
+    padding: 0px 0px 0px 0px;
 }
 
 li{
@@ -124,9 +130,17 @@ li{
     font-size: 2rem;
 }
 
+#Forecast{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 #day{
-    border: solid;
-    display: inline-block
+    background-color: var(--light-background);
+    width: 150px;
+    height: 150px;
 }
 
 .min-100-vh {
