@@ -4,6 +4,7 @@ var clear = document.querySelector('#clearbtn');
 var now = document.querySelector('#weatherNow');
 var searchfromhistory = document.querySelector('#historyBtn');
 
+// show weather by search
 function getWeather(event) {
     event.preventDefault();
     var forecastlist = document.querySelector('#Forecast');
@@ -13,6 +14,7 @@ function getWeather(event) {
     getforecast(inputcity);
 }
 
+// remove all history
 function removehistory(event) {
     event.preventDefault();
     localStorage.clear();
@@ -20,6 +22,7 @@ function removehistory(event) {
     historysearch.textContent = '';
 }
 
+// show weather by click history search
 function gethistoryWeather(event) {
     event.preventDefault();
     var forecastlist = document.querySelector('#Forecast');
@@ -29,8 +32,7 @@ function gethistoryWeather(event) {
     getforecast(input_history);
 }
 
-
-
+//get today weather data
 function weathertoday(myinput){
     var api_key = 'be617f0a2a928440246df40a1f51db8c';
     // var inputcity = cities.value;
@@ -114,6 +116,7 @@ function weathertoday(myinput){
         });
 }
 
+//get forecast weather data
 function getforecast(myforecast){
     var api_key = 'be617f0a2a928440246df40a1f51db8c';
     var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + myforecast +'&units=imperial&appid=' + api_key;
@@ -165,7 +168,7 @@ function getforecast(myforecast){
         });
 }
 
-
+// save search input into search history
 function history(){
     var allcities = localStorage.getItem("inputCity")
     if (allcities == null){
@@ -186,6 +189,7 @@ function history(){
     }
 }
 
+// convert unix date to regular data
 function unixtodate(unix){
     var months = ['1','2','3','4','5','6','7','8','9','10','11','12'];
     var findDate = new Date(unix * 1000);
