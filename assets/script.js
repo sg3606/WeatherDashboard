@@ -2,19 +2,15 @@ var cities = document.querySelector('#city');
 var search = document.querySelector('#submitbtn');
 var clear = document.querySelector('#clearbtn');
 var now = document.querySelector('#weatherNow');
-
+var searchfromhistory = document.querySelector('#historyBtn');
 
 function getWeather(event) {
     event.preventDefault();
     var forecastlist = document.querySelector('#Forecast');
     forecastlist.textContent = '';
-    weathertoday();
-    getforecast();
-}
-
-function gethistoryWeather() {
-    var input_history = this.textContent;
-    console.log(input_history)
+    var inputcity = cities.value;
+    weathertoday(inputcity);
+    getforecast(inputcity);
 }
 
 function removehistory(event) {
@@ -24,10 +20,21 @@ function removehistory(event) {
     historysearch.textContent = '';
 }
 
-function weathertoday(){
+function gethistoryWeather(event) {
+    event.preventDefault();
+    var forecastlist = document.querySelector('#Forecast');
+    forecastlist.textContent = '';
+    var input_history = event.target.textContent;
+    weathertoday(input_history);
+    getforecast(input_history);
+}
+
+
+
+function weathertoday(myinput){
     var api_key = 'be617f0a2a928440246df40a1f51db8c';
-    var inputcity = cities.value;
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + inputcity +'&units=imperial&appid=' + api_key;
+    // var inputcity = cities.value;
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + myinput +'&units=imperial&appid=' + api_key;
     now.setAttribute("class","list-group");
     fetch(url)
         .then(function (response) {
@@ -61,7 +68,10 @@ function weathertoday(){
 
                 var arrayCity = inputcitylist.split("-");
                 if (arrayCity.includes(data.name)) {
-                    return;
+                    getname.textContent = data.name + ' ' + showdate;
+                    gettemp.textContent = 'Temperature: '+ data.main.temp + ' ℉';
+                    gethumidity.textContent = 'Humidity: '+ data.main.humidity +' %';
+                    getwind.textContent = 'Wind Speed: '+ data.wind.speed + 'MPH'
                 } else {
                     var historysearch = document.querySelector('#historyBtn');
                     var HistoryBtnEl = document.createElement('button');
@@ -93,10 +103,9 @@ function weathertoday(){
         });
 }
 
-function getforecast(){
+function getforecast(myforecast){
     var api_key = 'be617f0a2a928440246df40a1f51db8c';
-    var inputcity = cities.value;
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + inputcity +'&units=imperial&appid=' + api_key;
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + myforecast +'&units=imperial&appid=' + api_key;
 
     fetch(url)
         .then(function (response) {
@@ -175,8 +184,8 @@ function unixtodate(unix){
 
 search.addEventListener('click',getWeather);
 clear.addEventListener('click',removehistory);
-// if(searchfromhistory){
-//     searchfromhistory.addEventListener('click',gethistoryWeather);
-// }
-// searchfromhistory.addEventListener('click',gethistoryWeather);
+if(searchfromhistory){
+    searchfromhistory.addEventListener('click',gethistoryWeather);
+}
+
 history();
