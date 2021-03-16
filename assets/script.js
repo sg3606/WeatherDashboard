@@ -34,7 +34,7 @@ function gethistoryWeather(event) {
 function weathertoday(myinput){
     var api_key = 'be617f0a2a928440246df40a1f51db8c';
     // var inputcity = cities.value;
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + myinput +'&units=imperial&appid=' + api_key;
+    var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + myinput +'&units=imperial&appid=' + api_key;
     now.setAttribute("class","list-group");
     fetch(url)
         .then(function (response) {
@@ -91,7 +91,7 @@ function weathertoday(myinput){
             var lon_city = data.coord.lon;
             var lat_city = data.coord.lat;
 
-            var uv_url = 'http://api.openweathermap.org/data/2.5/uvi?lat='+ lat_city +'&lon=' +lon_city+ '&appid=' + api_key;
+            var uv_url = 'https://api.openweathermap.org/data/2.5/uvi?lat='+ lat_city +'&lon=' +lon_city+ '&appid=' + api_key;
             fetch(uv_url)
             .then(function (response) {
                 return response.json();
@@ -105,7 +105,7 @@ function weathertoday(myinput){
 
 function getforecast(myforecast){
     var api_key = 'be617f0a2a928440246df40a1f51db8c';
-    var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + myforecast +'&units=imperial&appid=' + api_key;
+    var url = 'https://api.openweathermap.org/data/2.5/weather?q=' + myforecast +'&units=imperial&appid=' + api_key;
 
     fetch(url)
         .then(function (response) {
