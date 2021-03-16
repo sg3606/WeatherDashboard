@@ -140,7 +140,31 @@ li{
 #day{
     background-color: var(--light-background);
     width: 150px;
-    height: 150px;
+    height: 250px;
+}
+
+#uv{
+    width: 150px;
+}
+
+.lowuv{
+    background-color: Green;
+}
+
+.moderateuv{
+    background-color: Yellow;
+}
+
+.highuv{
+    background-color: Orange;
+}
+
+.veryhighuv{
+    background-color: Red;
+}
+
+.extremeuv{
+    background-color: violet;
 }
 
 .min-100-vh {

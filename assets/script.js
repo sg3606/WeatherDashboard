@@ -82,8 +82,8 @@ function weathertoday(myinput){
                 }
             }
 
-
-            getname.textContent = data.name + ' ' + showdate;
+            var icon_url = 'http://openweathermap.org/img/wn/'+data.weather[0].icon+'@2x.png';
+            getname.innerHTML = data.name + ' ' + showdate + '<img src="'+ icon_url +'" width="40" height="40">';
             gettemp.textContent = 'Temperature: '+ data.main.temp + ' ℉';
             gethumidity.textContent = 'Humidity: '+ data.main.humidity +' %';
             getwind.textContent = 'Wind Speed: '+ data.wind.speed + 'MPH'
@@ -98,6 +98,17 @@ function weathertoday(myinput){
             })
             .then(function (data) {
                 var getuv = document.querySelector('#uv');
+                if(data.value < 3){
+                    getuv.setAttribute("class","lowuv")
+                }else if (data.value > 3 && data.value < 6) {
+                    getuv.setAttribute("class","moderateuv")
+                }else if (data.value > 6 && data.value < 8) {
+                    getuv.setAttribute("class","highuv")
+                }else if (data.value > 8 && data.value < 11) {
+                    getuv.setAttribute("class","veryhighuv")
+                }else{
+                    getuv.setAttribute("class","extremeuv")
+                }
                 getuv.textContent = 'UV Index: '+ data.value;
             });
         });
@@ -128,19 +139,23 @@ function getforecast(myforecast){
                     var forecast5day = document.createElement('div');
                     var listul = document.createElement('ul');
                     var li_date = document.createElement('li');
+                    var li_icon = document.createElement('li');
                     var li_temp = document.createElement('li');
                     var li_humidity = document.createElement('li');
-
+                    var forecasticon = data.daily[i+1].weather[0].icon;
+                    var forecast_url = 'http://openweathermap.org/img/wn/'+forecasticon+'@2x.png';
                     forecast5day.setAttribute("id","day");
                     listul.setAttribute("id","forecastday");
 
                     li_date.textContent = unixtodate(data.daily[i+1].dt);
+                    li_icon.innerHTML = '<img src="'+ forecast_url +'" width="40" height="40">'
                     li_temp.textContent = 'Temp: '+ data.daily[i+1].temp.day;
                     li_humidity.textContent = 'Humidity: '+ data.daily[i+1].humidity;
                     
                     forecastlist.appendChild(forecast5day);
                     forecast5day.appendChild(listul);
                     listul.appendChild(li_date);
+                    listul.appendChild(li_icon);
                     listul.appendChild(li_temp);
                     listul.appendChild(li_humidity);
                 }
