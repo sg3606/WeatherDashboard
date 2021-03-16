@@ -14,10 +14,10 @@ WHEN I view future weather conditions for that city\
 THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity\
 WHEN I click on a city in the search history\
 THEN I am again presented with current and future conditions for that city\
-![colorcode](./assets/screenshots/uv color code.png)
+![colorcode](./assets/screenshots/uvcolor.png)
 ![show1](./assets/screenshots/show1.gif)
 ![show2](./assets/screenshots/show2.gif)
-![show3](./assets/screenshots/show3.gif)
+![show3](./assets/screenshots/Show3.gif)
 
 # Generator GitHub site
 [Github Site](https://sg3606.github.io/WeatherDashboard/)
