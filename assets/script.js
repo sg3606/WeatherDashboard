@@ -1,6 +1,8 @@
 var cities = document.querySelector('#city');
 var search = document.querySelector('#submitbtn');
-var now = document.querySelector('#weatherNow')
+var clear = document.querySelector('#clearbtn');
+var now = document.querySelector('#weatherNow');
+
 
 function getWeather(event) {
     event.preventDefault();
@@ -10,15 +12,31 @@ function getWeather(event) {
     getforecast();
 }
 
+function gethistoryWeather() {
+    var input_history = this.textContent;
+    console.log(input_history)
+}
+
+function removehistory(event) {
+    event.preventDefault();
+    localStorage.clear();
+    var historysearch = document.querySelector('#historyBtn');
+    historysearch.textContent = '';
+}
+
 function weathertoday(){
     var api_key = 'be617f0a2a928440246df40a1f51db8c';
     var inputcity = cities.value;
     var url = 'http://api.openweathermap.org/data/2.5/weather?q=' + inputcity +'&units=imperial&appid=' + api_key;
     now.setAttribute("class","list-group");
-
     fetch(url)
         .then(function (response) {
-            return response.json();
+            if (response.status === 400 || response.status === 404) {
+                alert('City Not Found')
+                window.location.reload();
+              } else {
+                return response.json();
+              }
         })
         .then(function (data) {
             var getname = document.querySelector('#cityname');
@@ -26,7 +44,34 @@ function weathertoday(){
             var gethumidity = document.querySelector('#humidity');
             var getwind = document.querySelector('#wind');
             var getdate = data.dt;
-            var showdate = unixtodate(getdate)
+            var showdate = unixtodate(getdate);
+
+            if (localStorage.getItem("inputCity") == null){
+                localStorage.setItem("inputCity",data.name);
+
+                var historysearch = document.querySelector('#historyBtn');
+                var HistoryBtnEl = document.createElement('button');
+                HistoryBtnEl.setAttribute("class","btn");
+                HistoryBtnEl.setAttribute("id","thisbtn");
+                HistoryBtnEl.textContent = data.name;
+                historysearch.appendChild(HistoryBtnEl);
+            } else {
+                var inputcitylist = localStorage.getItem("inputCity")
+                localStorage.setItem("inputCity",inputcitylist+'-'+data.name);
+
+                var arrayCity = inputcitylist.split("-");
+                if (arrayCity.includes(data.name)) {
+                    return;
+                } else {
+                    var historysearch = document.querySelector('#historyBtn');
+                    var HistoryBtnEl = document.createElement('button');
+                    HistoryBtnEl.setAttribute("class","btn");
+                    HistoryBtnEl.setAttribute("id","thisbtn");
+                    HistoryBtnEl.textContent = data.name;
+                    historysearch.appendChild(HistoryBtnEl);
+                }
+            }
+
 
             getname.textContent = data.name + ' ' + showdate;
             gettemp.textContent = 'Temperature: '+ data.main.temp + ' ℉';
@@ -96,6 +141,27 @@ function getforecast(){
         });
 }
 
+
+function history(){
+    var allcities = localStorage.getItem("inputCity")
+    if (allcities == null){
+        return allcities;
+    } else {
+    var cityarray = allcities.split("-");
+    var checkrepeat = new Set(cityarray);
+    var backtoarry = [...checkrepeat]
+
+    for (let i = 0; i < backtoarry.length; i++) {
+        var historysearch = document.querySelector('#historyBtn');
+        var HistoryBtnEl = document.createElement('button');
+        HistoryBtnEl.setAttribute("class","btn");
+        HistoryBtnEl.setAttribute("id","thisbtn");
+        HistoryBtnEl.textContent = backtoarry[i];
+        historysearch.appendChild(HistoryBtnEl);
+    }
+    }
+}
+
 function unixtodate(unix){
     var months = ['1','2','3','4','5','6','7','8','9','10','11','12'];
     var findDate = new Date(unix * 1000);
@@ -108,3 +174,9 @@ function unixtodate(unix){
 
 
 search.addEventListener('click',getWeather);
+clear.addEventListener('click',removehistory);
+// if(searchfromhistory){
+//     searchfromhistory.addEventListener('click',gethistoryWeather);
+// }
+// searchfromhistory.addEventListener('click',gethistoryWeather);
+history();
